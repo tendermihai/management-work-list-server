@@ -11,6 +11,7 @@ const connectDb = () => {
       {
         host: "localhost",
         dialect: "mysql",
+        logging: false,
       }
     );
 
