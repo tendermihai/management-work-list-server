@@ -4,6 +4,7 @@ import asyncHandler from "express-async-handler";
 let getAll = asyncHandler(async (req, res) => {
   try {
     let work = await db.models.Work.findAll();
+    console.log(work);
     res.status(200).json(work);
   } catch (error) {
     console.error("Error in getAll:", error);
@@ -74,4 +75,19 @@ const updateWork = asyncHandler(async (req, res) => {
   res.status(200).json("Work has been successfully updated");
 });
 
-export { getAll, addWork, deleteWork, updateWork };
+const getWorkById = asyncHandler(async (req, res) => {
+  let { id } = req.params;
+  let work = await db.models.Work.findByPk(id);
+
+  console.log(id, "this is id");
+  console.log(work, "this is work");
+
+  if (!work) {
+    res.status(404).json({ message: "Cannot find work" });
+    return;
+  }
+
+  res.status(200).json(work);
+});
+
+export { getAll, addWork, deleteWork, updateWork, getWorkById };
