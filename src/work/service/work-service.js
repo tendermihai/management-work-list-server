@@ -75,6 +75,17 @@ const updateWork = asyncHandler(async (req, res) => {
   res.status(200).json("Work has been successfully updated");
 });
 
+const getImage = asyncHandler(async (req, res) => {
+  let { id } = req.params;
+
+  let data = await db.models.Work.findByPk(id);
+
+  //res.setHeader("Content-Type", "application/octet-stream");
+  //res.setHeader("Content-Disposition", "attachment; filename=file.txt");
+
+  res.status(200).end(data.image);
+});
+
 const getWorkById = asyncHandler(async (req, res) => {
   let { id } = req.params;
   let work = await db.models.Work.findByPk(id);
@@ -90,4 +101,4 @@ const getWorkById = asyncHandler(async (req, res) => {
   res.status(200).json(work);
 });
 
-export { getAll, addWork, deleteWork, updateWork, getWorkById };
+export { getAll, addWork, deleteWork, updateWork, getWorkById, getImage };
